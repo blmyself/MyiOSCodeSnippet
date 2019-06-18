@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDECodeSnippetCompletionPrefix</key>
+	<string>lg_nodatacell</string>
+	<key>IDECodeSnippetCompletionScopes</key>
+	<array>
+		<string>All</string>
+	</array>
+	<key>IDECodeSnippetContents</key>
+	<string>    if ([self.dataSource count]==0) {
+        CGRect tipCellFrame = CGRectMake(0, 0, UI_SCREEN_WIDTH,UI_SCREEN_HEIGHT-UI_SCREEN_HEIGHT/3-TOP_ORIGIN_Y);
+        UITableViewCell * tipCell;
+        if (!self.goodsListTableView.header.isRefreshing) {
+            tipCell = [UIHelper tipTxtCell:&lt;#message#&gt; withFrame:tipCellFrame emptyDataImage:nil];
+        }else{
+            tipCell = [UIHelper tipTxtCell:&lt;#message#&gt; withFrame:tipCellFrame];
+        }
+        return tipCell;
+    }else{
+        
+        NSDictionary * dic = [self.dataSource objectAtIndex:indexPath.row];
+        [cell setDataDic:dic];
+        cell.frame = CGRectMake(0, 0, cell.frame.size.width, [cell getCellHeight]);
+        
+        return cell;
+    }</string>
+	<key>IDECodeSnippetIdentifier</key>
+	<string>EF5E52BE-F859-4727-B326-A250EB9BA769</string>
+	<key>IDECodeSnippetLanguage</key>
+	<string>Xcode.SourceCodeLanguage.Objective-C</string>
+	<key>IDECodeSnippetSummary</key>
+	<string>shortcurt:lg_nodatacell</string>
+	<key>IDECodeSnippetTitle</key>
+	<string>LazyGuest No Data Cell</string>
+	<key>IDECodeSnippetUserSnippet</key>
+	<true/>
+	<key>IDECodeSnippetVersion</key>
+	<integer>2</integer>
+</dict>
+</plist>

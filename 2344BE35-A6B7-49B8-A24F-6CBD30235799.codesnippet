@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDECodeSnippetCompletionPrefix</key>
+	<string>lg_celladdline</string>
+	<key>IDECodeSnippetCompletionScopes</key>
+	<array>
+		<string>All</string>
+	</array>
+	<key>IDECodeSnippetContents</key>
+	<string>    //分割线
+    [[self.contentView viewWithTag:1010] removeFromSuperview];//先清除在添加防止因为cell重用产生问题
+    UIView * lineView = [[UIView alloc]initWithFrame:CGRectMake(0, self.cellHeight-0.5, UI_SCREEN_WIDTH, 0.5)];
+    lineView.tag = 1010;
+    lineView.backgroundColor = [UIColor lightGrayColor];
+    [self.contentView addSubview:lineView];</string>
+	<key>IDECodeSnippetIdentifier</key>
+	<string>2344BE35-A6B7-49B8-A24F-6CBD30235799</string>
+	<key>IDECodeSnippetLanguage</key>
+	<string>Xcode.SourceCodeLanguage.Objective-C</string>
+	<key>IDECodeSnippetSummary</key>
+	<string>shortcurt:lg_celladdline</string>
+	<key>IDECodeSnippetTitle</key>
+	<string>lazy guest cell add bottom line</string>
+	<key>IDECodeSnippetUserSnippet</key>
+	<true/>
+	<key>IDECodeSnippetVersion</key>
+	<integer>2</integer>
+</dict>
+</plist>

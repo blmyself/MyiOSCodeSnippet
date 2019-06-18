@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDECodeSnippetCompletionPrefix</key>
+	<string>hpg_httppost</string>
+	<key>IDECodeSnippetCompletionScopes</key>
+	<array>
+		<string>All</string>
+	</array>
+	<key>IDECodeSnippetContents</key>
+	<string>        NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:
+                              &lt;#obj#&gt;,@"&lt;#key#&gt;",
+                              ,nil];
+[super doPost:&lt;#api#&gt; params:params showProgress:YES tag:&lt;#req_tag#&gt;];</string>
+	<key>IDECodeSnippetIdentifier</key>
+	<string>9204F593-3C7F-4289-93CA-0B314A6C6B66</string>
+	<key>IDECodeSnippetLanguage</key>
+	<string>Xcode.SourceCodeLanguage.Objective-C</string>
+	<key>IDECodeSnippetSummary</key>
+	<string>HPG HTTP POST</string>
+	<key>IDECodeSnippetTitle</key>
+	<string>HPG HTTP POST</string>
+	<key>IDECodeSnippetUserSnippet</key>
+	<true/>
+	<key>IDECodeSnippetVersion</key>
+	<integer>2</integer>
+</dict>
+</plist>

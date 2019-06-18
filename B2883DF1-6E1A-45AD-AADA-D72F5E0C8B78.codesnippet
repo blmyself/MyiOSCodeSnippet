@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDECodeSnippetCompletionPrefix</key>
+	<string>bl_initcustomcell</string>
+	<key>IDECodeSnippetCompletionScopes</key>
+	<array>
+		<string>CodeBlock</string>
+	</array>
+	<key>IDECodeSnippetContents</key>
+	<string>    static NSString *cellIdentifier = @"&lt;#cellIdentifier#&gt;";
+    
+    &lt;#CustomCell#&gt; *cell = (&lt;#CustomCell#&gt; *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    
+    if(cell == nil) {
+        NSArray *topLevelObjects = [[NSBundle mainBundle]loadNibNamed:@"&lt;#CustomCell#&gt;" owner:self options:nil];
+        for (id  oneObject in topLevelObjects) {
+            if ([oneObject isKindOfClass:[&lt;#CustomCell#&gt; class]]) {
+                cell = (&lt;#CustomCell#&gt; *)oneObject;
+            }
+        }
+    }
+
+    return cell;</string>
+	<key>IDECodeSnippetIdentifier</key>
+	<string>B2883DF1-6E1A-45AD-AADA-D72F5E0C8B78</string>
+	<key>IDECodeSnippetLanguage</key>
+	<string>Xcode.SourceCodeLanguage.Objective-C</string>
+	<key>IDECodeSnippetSummary</key>
+	<string>shortcut:bl_initcustomcell</string>
+	<key>IDECodeSnippetTitle</key>
+	<string>Init Custom Cell</string>
+	<key>IDECodeSnippetUserSnippet</key>
+	<true/>
+	<key>IDECodeSnippetVersion</key>
+	<integer>2</integer>
+</dict>
+</plist>

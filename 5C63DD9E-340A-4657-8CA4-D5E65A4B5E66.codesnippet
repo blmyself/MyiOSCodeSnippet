@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDECodeSnippetCompletionPrefix</key>
+	<string>bl_mj_pagination_request</string>
+	<key>IDECodeSnippetCompletionScopes</key>
+	<array>
+		<string>All</string>
+	</array>
+	<key>IDECodeSnippetContents</key>
+	<string>//下拉刷新
+- (void)refreshData{
+    self.isLoadMore = NO;
+    //更新商品列表操作，把页码重置为1
+    self.page = 1;
+    [self.treasuresListTableView.mj_footer resetNoMoreData];
+    [self loadData];
+}
+
+//上拉加载更多
+- (void)loadMoreData{
+    self.isLoadMore = YES;
+    
+    //加载更多操作，页码自增
+    if (self.page&lt;self.totalPage) {
+        self.page++;
+    }else{
+        //显示没有更多数据了
+        [self.treasuresListTableView.mj_footer endRefreshingWithNoMoreData];
+        return;
+    }
+    [self loadData];
+}
+
+//结束刷新
+- (void)endRefresh{
+    if (self.isLoadMore) {
+        [self.treasuresListTableView.mj_footer endRefreshing];
+    }else{
+        [self.treasuresListTableView.mj_header endRefreshing];
+    }
+    [self.treasuresListTableView reloadData];
+    
+}
+
+#pragma mark - Http Response
+- (void)handleHttpResponse:(id)response tag:(NSInteger)tag{
+    NSLog(@"response:%@",response);
+    
+    NSString * noDataMessage = nil;
+    if ([response isKindOfClass:[NSDictionary class]]) {
+        NSDictionary * dic = (NSDictionary *)response;
+        
+        NSArray * list = [dic objectForKey:@"rows"];
+        self.totalPage = [[dic objectForKey:@"total"] integerValue];
+        
+        if (self.isLoadMore) {
+            if ([list count]&gt;0) {
+                [self.dataSource addObjectsFromArray:list];
+            }
+        }else{
+            [self.dataSource removeAllObjects];
+            self.dataSource = [NSMutableArray arrayWithArray:list];
+        }
+        
+        
+        if ([list count]==0) {
+            noDataMessage = self.isLoadMore?@"没有更多了":@"暂无数据";
+        }
+    }
+    if (noDataMessage) {
+        [HUDView showWithOnlyText:noDataMessage];
+    }
+    [self endRefresh];
+}
+
+- (void)handleHttpResponseError:(NSString *)errorInfo errorCode:(NSInteger)errCode tag:(NSInteger)tag{
+    [HUDView hide];
+    [HUDView showWithOnlyText:errorInfo];
+    [self endRefresh];
+}</string>
+	<key>IDECodeSnippetIdentifier</key>
+	<string>5C63DD9E-340A-4657-8CA4-D5E65A4B5E66</string>
+	<key>IDECodeSnippetLanguage</key>
+	<string>Xcode.SourceCodeLanguage.Objective-C</string>
+	<key>IDECodeSnippetSummary</key>
+	<string>shortcut:bl_mj_pagination_request</string>
+	<key>IDECodeSnippetTitle</key>
+	<string>Mjrefresh  and Pagination Request</string>
+	<key>IDECodeSnippetUserSnippet</key>
+	<true/>
+	<key>IDECodeSnippetVersion</key>
+	<integer>2</integer>
+</dict>
+</plist>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDECodeSnippetCompletionPrefix</key>
+	<string>bl_httprequest</string>
+	<key>IDECodeSnippetCompletionScopes</key>
+	<array>
+		<string>All</string>
+	</array>
+	<key>IDECodeSnippetContents</key>
+	<string>    //发送请求
+    NSDictionary * paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                                @"",@"",
+                                nil];
+    __weak typeof(self) weakSelf = self;
+    [MBProgressHUD showLoading:@"" ToView:self.view];
+    [[BLNetApiManager sharedManager] requestWithParams:paramsDic uri:API_LOGIN  andBlock:^(CFHttpResponseModel *data, NSError *error) {
+        [MBProgressHUD hideHUDForView:self.view];
+        
+        if (!error) {
+            
+        }
+    }];</string>
+	<key>IDECodeSnippetIdentifier</key>
+	<string>12A7A5C9-568C-4A4A-9CAC-37EA0D33E218</string>
+	<key>IDECodeSnippetLanguage</key>
+	<string>Xcode.SourceCodeLanguage.Objective-C</string>
+	<key>IDECodeSnippetSummary</key>
+	<string>BL Http Request Quick Method</string>
+	<key>IDECodeSnippetTitle</key>
+	<string>BL Http Request Quick Method</string>
+	<key>IDECodeSnippetUserSnippet</key>
+	<true/>
+	<key>IDECodeSnippetVersion</key>
+	<integer>2</integer>
+</dict>
+</plist>

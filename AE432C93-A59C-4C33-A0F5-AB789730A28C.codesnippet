@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDECodeSnippetCompletionPrefix</key>
+	<string>lg_iqresponse</string>
+	<key>IDECodeSnippetCompletionScopes</key>
+	<array>
+		<string>All</string>
+	</array>
+	<key>IDECodeSnippetContents</key>
+	<string>#pragma mark - IQ RESPONSE
+- (void)handleIQResponse:(NSDictionary *)response trackId:(NSString *)trackId{
+    [HUDView hide];
+    NSString * info = [response objectForKey:@"info"];
+    [HUDView showWithOnlyText:info];
+}
+
+- (void)handleIQResponseError:(NSString *)errorInfo trackId:(NSString *)trackId{
+    [HUDView hide];
+    [HUDView showWithOnlyText:errorInfo];
+}</string>
+	<key>IDECodeSnippetIdentifier</key>
+	<string>AE432C93-A59C-4C33-A0F5-AB789730A28C</string>
+	<key>IDECodeSnippetLanguage</key>
+	<string>Xcode.SourceCodeLanguage.Objective-C</string>
+	<key>IDECodeSnippetSummary</key>
+	<string>shortcut:lg_iqresponse</string>
+	<key>IDECodeSnippetTitle</key>
+	<string>LazyGuest IQ Response Delegate</string>
+	<key>IDECodeSnippetUserSnippet</key>
+	<true/>
+	<key>IDECodeSnippetVersion</key>
+	<integer>2</integer>
+</dict>
+</plist>

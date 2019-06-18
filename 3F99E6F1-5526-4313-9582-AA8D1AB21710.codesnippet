@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDECodeSnippetCompletionPrefix</key>
+	<string>bl_imagepicker</string>
+	<key>IDECodeSnippetCompletionScopes</key>
+	<array>
+		<string>All</string>
+	</array>
+	<key>IDECodeSnippetContents</key>
+	<string>#pragma mark - UIImagePickerControllerDelegate
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info{
+    UIImage *editedImage = [info objectForKey:UIImagePickerControllerEditedImage];
+    editedImage = [editedImage fixOrientation];
+    UIImageView * editedImageView = [[UIImageView alloc]initWithImage:editedImage];
+    NSLog(@"editedImageView Frame:%@",NSStringFromCGRect(editedImageView.frame));
+    
+    UIImage *thumbImage = [editedImage scaleToSize:CGSizeMake(160, 160)];//略缩图
+    
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
+    
+    //上传图片，并获得返回的图片url
+    NSString * _thumbImageName = @"tempAvatar.png";
+    [self uploadImage:thumbImage andName:_thumbImageName];
+}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker{
+    [picker dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark - 从图片库选择图片
+- (void)getPhotoFromAlbum{
+    
+    UIImagePickerController * picker = [[UIImagePickerController alloc] init];
+    picker.delegate = self;
+    picker.allowsEditing = YES;
+    picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    
+    //跳转到imagepickerview
+    [self presentViewController:picker animated:YES completion:nil];
+    
+}
+#pragma mark - 捕获摄像头图片
+- (void)getPhotoFromCameral{
+    
+    UIImagePickerController * picker = [[UIImagePickerController alloc] init];
+    picker.delegate = self;
+    picker.allowsEditing = YES;
+    picker.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+        picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+    }else{
+        NSLog(@"no cameral");
+        [HUDView showWithOnlyText:@"没有找到摄像头"];
+    }
+    
+    //跳转到imagepickerview
+    [self presentViewController:picker animated:YES completion:nil];
+    
+}
+
+#pragma mark - 按钮点击事件
+//
+- (IBAction)avatarButtonClicked:(id)sender {
+    //修改头像
+    UIActionSheet * modifyAvatarActionSheet = [[UIActionSheet alloc]init];
+    modifyAvatarActionSheet.title = @"修改头像";
+    [modifyAvatarActionSheet addButtonWithTitle:@"相册"];
+    [modifyAvatarActionSheet addButtonWithTitle:@"拍照"];
+    [modifyAvatarActionSheet addButtonWithTitle:@"取消"];
+    [modifyAvatarActionSheet setDestructiveButtonIndex:2];
+    [modifyAvatarActionSheet showInView:self.view.window withCompletionHandler:^(NSInteger buttonIndex) {
+        switch (buttonIndex) {
+            case 0:
+                [self getPhotoFromAlbum];
+                break;
+            case 1:
+                [self getPhotoFromCameral];
+                break;
+            case 2:
+                
+                break;
+            default:
+                break;
+        }
+    }];
+}</string>
+	<key>IDECodeSnippetIdentifier</key>
+	<string>3F99E6F1-5526-4313-9582-AA8D1AB21710</string>
+	<key>IDECodeSnippetLanguage</key>
+	<string>Xcode.SourceCodeLanguage.Objective-C</string>
+	<key>IDECodeSnippetSummary</key>
+	<string>UIImagePickerController Setup Quick Method</string>
+	<key>IDECodeSnippetTitle</key>
+	<string>UIImagePickerController Setup Quick Method</string>
+	<key>IDECodeSnippetUserSnippet</key>
+	<true/>
+	<key>IDECodeSnippetVersion</key>
+	<integer>2</integer>
+</dict>
+</plist>

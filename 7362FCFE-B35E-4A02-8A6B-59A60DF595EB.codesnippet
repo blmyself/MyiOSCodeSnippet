@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDECodeSnippetCompletionPrefix</key>
+	<string>hs_httprequest</string>
+	<key>IDECodeSnippetCompletionScopes</key>
+	<array>
+		<string>All</string>
+	</array>
+	<key>IDECodeSnippetContents</key>
+	<string>    //发送请求
+    NSDictionary * paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                                @"",@"",
+                                nil];
+    __weak typeof(self) weakSelf = self;
+    [[BLNetApiManager sharedManager] requestWithParams:paramsDic uri:API_LOGIN  andBlock:^(SGHttpResponsModel *data, NSError *error) {
+        [HUDView hide];
+        
+        if (!error) {
+            
+        }
+    }];</string>
+	<key>IDECodeSnippetIdentifier</key>
+	<string>7362FCFE-B35E-4A02-8A6B-59A60DF595EB</string>
+	<key>IDECodeSnippetLanguage</key>
+	<string>Xcode.SourceCodeLanguage.Objective-C</string>
+	<key>IDECodeSnippetSummary</key>
+	<string>HomeShoppingMall Http Request</string>
+	<key>IDECodeSnippetTitle</key>
+	<string>HomeShoppingMall Http Request</string>
+	<key>IDECodeSnippetUserSnippet</key>
+	<true/>
+	<key>IDECodeSnippetVersion</key>
+	<integer>2</integer>
+</dict>
+</plist>

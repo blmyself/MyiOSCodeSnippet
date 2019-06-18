@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDECodeSnippetCompletionPrefix</key>
+	<string>dl_requestwithpaging</string>
+	<key>IDECodeSnippetCompletionScopes</key>
+	<array>
+		<string>All</string>
+	</array>
+	<key>IDECodeSnippetContents</key>
+	<string>#pragma mark - 加载数据
+- (void)loadDataWithPage:(NSInteger)curPage keyword:(NSString *)keyword{
+    
+    NSDictionary * paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                                @(curPage),@"curpage",
+                                SAFE_STRING(keyword),@"keyword",
+                                nil];
+    __weak typeof(self) weakSelf = self;
+    self.isLoading = YES;
+    [[BLNetApiManager sharedManager]requestWithParams:paramsDic uri:URI_YEARDATA_LIST andBlock:^(SGHttpResponsModel * data, NSError *error) {
+        weakSelf.isLoading = NO;
+        [weakSelf endMjRefresh];
+        
+        if (!error) {
+            
+            if (self.isSearching) {
+                [self.searchTableViewModel.dataArray addObject:@"工业产值"];
+                [self.searchDisplayController.searchResultsTableView reloadData];
+            }else{
+                self.page = [data.curpage integerValue];//[[data.data objectForKey:@"curpage"] integerValue];
+                self.totalPage = [data.total integerValue];
+                NSArray * resultArray = (NSArray *)data.list;
+                NSArray * models = [self buildDataArrayWithParentArray:resultArray];
+                if (self.isLoadMore) {
+                    [self.dataArray addObjectsFromArray:models];
+                }else{
+                    self.dataArray = [NSMutableArray arrayWithArray:models];
+                }
+                [self.treeTableView refreshWithData:self.dataArray];
+            }
+            
+            
+        }
+    }];
+    
+}
+
+- (void)endMjRefresh{
+    if (self.isLoadMore) {
+        [self.treeTableView.mj_footer endRefreshing];
+    }else{
+        [self.refreshView stopRefresh];
+    }
+}
+
+- (void)refreshData{
+    if (self.isLoading) {
+        return;
+    }
+    self.isLoadMore = NO;
+    [self.treeTableView.mj_footer resetNoMoreData];
+    [self loadDataWithPage:1 keyword:@""];
+    
+}
+
+- (void)loadMoreData{
+    if (self.isLoading || ![self canLoadMore]) {
+        if(![self canLoadMore]){
+            [self.treeTableView.mj_footer endRefreshingWithNoMoreData];
+        }
+        return;
+    }
+    self.isLoadMore = YES;
+    [self loadDataWithPage:self.page+1 keyword:@""];
+}</string>
+	<key>IDECodeSnippetIdentifier</key>
+	<string>30D1E500-B791-4039-B96A-E30505475C43</string>
+	<key>IDECodeSnippetLanguage</key>
+	<string>Xcode.SourceCodeLanguage.Objective-C</string>
+	<key>IDECodeSnippetSummary</key>
+	<string>GJXQ http request with paging</string>
+	<key>IDECodeSnippetTitle</key>
+	<string>GJXQ http request with paging</string>
+	<key>IDECodeSnippetUserSnippet</key>
+	<true/>
+	<key>IDECodeSnippetVersion</key>
+	<integer>2</integer>
+</dict>
+</plist>

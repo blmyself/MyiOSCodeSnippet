@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDECodeSnippetCompletionPrefix</key>
+	<string>bl_sendiqtpl</string>
+	<key>IDECodeSnippetCompletionScopes</key>
+	<array>
+		<string>All</string>
+	</array>
+	<key>IDECodeSnippetContents</key>
+	<string>NSDictionary *dataDic = [NSDictionary dictionaryWithObjectsAndKeys:
+@"",@"m",
+nil];
+NSDictionary *sendDic = [NSDictionary dictionaryWithObjectsAndKeys:
+dataDic,@"dataDic",
+@"com:im:wawaPlug",@"queryXmlns",
+@"get",@"iqType",
+nil];
+if ([[WWAppDelegate appDelegate]connect]) {
+    [self.view addSubview:self.mbHud];
+    [self.mbHud show:YES];
+    SEL handleSelector = @selector(processLogin:withInfo:);
+    [self sendIqWithDataDic:sendDic andHandleSelector:handleSelector andTimeout:15.0f];
+}</string>
+	<key>IDECodeSnippetIdentifier</key>
+	<string>A8DBCF76-DD21-48E7-BCD2-01D78AF58612</string>
+	<key>IDECodeSnippetLanguage</key>
+	<string>Xcode.SourceCodeLanguage.Generic</string>
+	<key>IDECodeSnippetSummary</key>
+	<string>-shotcut:bl_sendiqtpl</string>
+	<key>IDECodeSnippetTitle</key>
+	<string>Send IQ Template Code</string>
+	<key>IDECodeSnippetUserSnippet</key>
+	<true/>
+	<key>IDECodeSnippetVersion</key>
+	<integer>2</integer>
+</dict>
+</plist>

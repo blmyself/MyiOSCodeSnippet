@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDECodeSnippetCompletionPrefix</key>
+	<string>bl_iqcallbackwithcache</string>
+	<key>IDECodeSnippetCompletionScopes</key>
+	<array>
+		<string>All</string>
+	</array>
+	<key>IDECodeSnippetContents</key>
+	<string>- (void)processFetchMyDispatches:(XMPPIQ *)iq withInfo:(id &lt;XMPPTrackingInfo&gt;)info{
+    //如果在timeout时间内有返回iq
+    NSString * errorMsg = nil;
+    if (iq) {
+        NSXMLElement * queryEle = [iq elementForName:@"query"];
+        NSString *jsonStr = [Utility jsonStringFromQueryElement:queryEle];
+        NSDictionary *resultDic  = [jsonStr objectFromJSONString];
+        NSString *infoMsg = [resultDic objectForKey:@"info"];
+        NSString * totalPage = [resultDic objectForKey:@"total"];
+        NSString * curPage = [resultDic objectForKey:@"curPage"];
+        if ([iq isResultIQ]) {//成功
+            //iq缓存起来
+            if (_isNeedUpdateCache) {
+                LZIQWithNscoding * cacheIq = [[LZIQWithNscoding alloc]initWithXMPPIQ:iq];
+                [[EGOCache globalCache] setObject:cacheIq forKey:&lt;#cacheKey#&gt; withTimeoutInterval:10];
+            }
+            
+            //更新页码
+            _currentPage = [curPage intValue];
+            _totalPage = [totalPage intValue];
+            
+            //判断是更新操作还是加载更多操作
+            NSArray  * resultArray = [resultDic objectForKey:@"list"];
+            NSLog(@"pending list:%@",resultArray);
+            if (_isUpdateHandle) {
+                [self.dataSource removeAllObjects];
+                self.dataSource  = [NSMutableArray arrayWithArray:resultArray];
+            }else{
+                [self.dataSource addObjectsFromArray:resultArray];
+            }
+            
+            if ([resultArray count]==0) {
+                errorMsg = _isUpdateHandle?@"暂无数据":@"没有更多了";
+            }
+            
+            //更新列表
+            [self.tableView reloadData];
+            
+        }else if([iq isErrorIQ]){//错误
+            errorMsg = infoMsg?infoMsg:@"获取待审委单失败";
+            //执行出错代码
+        }
+    }else{//没有返回iq
+        errorMsg = @"网络不给力，请检查您的网络！";
+    }
+    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+    //显示错误提示
+    if (errorMsg) {
+        [UIHelper showTextHudWithMessage:errorMsg inView:self.view hideAfterDelay:1.0f];
+    }
+    
+    //0.5秒后，停止刷新
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self endRefresh];
+    });
+}</string>
+	<key>IDECodeSnippetIdentifier</key>
+	<string>EE252D45-2142-44E0-8FE3-5C565165D323</string>
+	<key>IDECodeSnippetLanguage</key>
+	<string>Xcode.SourceCodeLanguage.Objective-C</string>
+	<key>IDECodeSnippetSummary</key>
+	<string>IQ CallBack With Cache</string>
+	<key>IDECodeSnippetTitle</key>
+	<string>IQ CallBack With Cache</string>
+	<key>IDECodeSnippetUserSnippet</key>
+	<true/>
+	<key>IDECodeSnippetVersion</key>
+	<integer>2</integer>
+</dict>
+</plist>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDECodeSnippetCompletionPrefix</key>
+	<string>bl_postcallback</string>
+	<key>IDECodeSnippetCompletionScopes</key>
+	<array>
+		<string>ClassImplementation</string>
+	</array>
+	<key>IDECodeSnippetContents</key>
+	<string>#pragma mark - Http Callback
+- (void)handleHttpResponse:(id)response tag:(NSInteger)tag{
+    [HUDView hide];
+    NSString * info = [response objectForKey:@"info"];
+    [HUDView showWithOnlyText:info];
+}
+
+- (void)handleHttpResponseError:(NSString *)errorInfo errorCode:(NSInteger)errCode tag:(NSInteger)tag{
+    [HUDView hide];
+    [HUDView showWithOnlyText:errorInfo];
+}</string>
+	<key>IDECodeSnippetIdentifier</key>
+	<string>196407E8-5439-47ED-B1C1-409DF0B5F06C</string>
+	<key>IDECodeSnippetLanguage</key>
+	<string>Xcode.SourceCodeLanguage.Objective-C</string>
+	<key>IDECodeSnippetSummary</key>
+	<string>Http Request Callback Method-shortcut-bl_postcallback</string>
+	<key>IDECodeSnippetTitle</key>
+	<string>Http Request Callback Method</string>
+	<key>IDECodeSnippetUserSnippet</key>
+	<true/>
+	<key>IDECodeSnippetVersion</key>
+	<integer>2</integer>
+</dict>
+</plist>

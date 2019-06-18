@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDECodeSnippetCompletionPrefix</key>
+	<string>bl_iqsendwithcache</string>
+	<key>IDECodeSnippetCompletionScopes</key>
+	<array>
+		<string>All</string>
+	</array>
+	<key>IDECodeSnippetContents</key>
+	<string>    //判断有没有缓存
+BOOL hasCache = [[EGOCache globalCache] hasCacheForKey:&lt;#cacheKey#&gt;];
+    LZIQWithNscoding * cachedIq = (LZIQWithNscoding *)[[EGOCache globalCache] objectForKey:&lt;#cacheKey#&gt;];
+    if (hasCache &amp;&amp; _isUpdateHandle) {//如果有缓存,且没过期
+        _isNeedUpdateCache = NO;//从缓存取数据，不需要更新缓存
+        [self processFetchMyDispatches:cachedIq.iq withInfo:nil];
+        NSLog(@"iq from cache");
+    }else{//如果没缓存或缓存过期
+        if ([[LZAppDelegate appDelegate]connect]) {
+            
+            if (_isUpdateHandle) {
+                //更新商品列表操作，自动把页码重置为1
+                _currentPage = 1;
+            }else{
+                //加载更多操作，页码自增
+                if (_currentPage&lt;_totalPage) {
+                    _currentPage++;
+                }else{
+                    [UIHelper showTextHudWithMessage:@"没有更多了" inView:self.view hideAfterDelay:1.0f];
+                    [self endRefresh];
+                    return;
+                }
+            }
+            
+            _isNeedUpdateCache = YES;//从网络加载数据，需要更新缓存
+            NSString * iqTrackId = [[LZAppDelegate getDataMonitor] &lt;#method#&gt;];
+            [[LZAppDelegate getXMPPIDTracker] addID:iqTrackId target:self selector:@selector(processFetchMyDispatches:withInfo:) timeout:API_REQUEST_TIMEOUT];
+        }else{
+            //如果服务器连接失败,加载离线数据
+            
+            LZIQWithNscoding * offLineCachedIq = (LZIQWithNscoding *)[[EGOCache globalCache] expiredObjectForKey:&lt;#cacheKey#&gt;];
+            if (offLineCachedIq &amp;&amp; _isUpdateHandle) {
+                _isNeedUpdateCache = NO;//从缓存取数据，不需要更新缓存
+                [self processFetchMyDispatches:cachedIq.iq withInfo:nil];
+            }else{
+                [self endRefresh];
+            }
+        }
+        
+    }</string>
+	<key>IDECodeSnippetIdentifier</key>
+	<string>A56DB16F-10EC-4A3F-BB64-D71E435A0070</string>
+	<key>IDECodeSnippetLanguage</key>
+	<string>Xcode.SourceCodeLanguage.Objective-C</string>
+	<key>IDECodeSnippetSummary</key>
+	<string>send iq with cache</string>
+	<key>IDECodeSnippetTitle</key>
+	<string>IQ Send With Cache</string>
+	<key>IDECodeSnippetUserSnippet</key>
+	<true/>
+	<key>IDECodeSnippetVersion</key>
+	<integer>2</integer>
+</dict>
+</plist>

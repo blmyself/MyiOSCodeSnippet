@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDECodeSnippetCompletionPrefix</key>
+	<string>hpg_httpresponse</string>
+	<key>IDECodeSnippetCompletionScopes</key>
+	<array>
+		<string>All</string>
+	</array>
+	<key>IDECodeSnippetContents</key>
+	<string>//请求数据
+-(BOOL)httpSuccessHandle:(NSDictionary *)data cache:(BOOL)cache tag:(int)tag{
+    if (tag==TAG_REQ_SMS) {
+        [DialogUtils showToast:@"短信验证码发送成功，请注意查收"];
+        return NO;
+    }
+    
+    return NO;//返回no是不缓存，yes是缓存
+}
+
+//请求结果异常处理回调
+- (BOOL)httpDataErrorHandle:(NSString *)info tag:(int)tag{
+    if(tag==TAG_REQ_SMS){
+        return NO;
+    }
+    return NO;//返回NO为全局处理，会弹窗；返回YES则为本界面处理
+}
+
+
+-(BOOL)httpRespError:(NSString *)data tag:(int)reqTag{
+    if (reqTag==TAG_REQ_SMS) {
+        [DialogUtils showToast:@"短信验证码发送失败"];
+        return YES;
+    }
+
+    return NO;//返回NO是全局处理，直接弹窗并返回上一页；返回yes说明本界面自己处理了
+}
+</string>
+	<key>IDECodeSnippetIdentifier</key>
+	<string>9DEB250D-73CE-4F45-80F4-274F76BC0565</string>
+	<key>IDECodeSnippetLanguage</key>
+	<string>Xcode.SourceCodeLanguage.Objective-C</string>
+	<key>IDECodeSnippetSummary</key>
+	<string>HPG_httpresponse</string>
+	<key>IDECodeSnippetTitle</key>
+	<string>HPG_httpresponse</string>
+	<key>IDECodeSnippetUserSnippet</key>
+	<true/>
+	<key>IDECodeSnippetVersion</key>
+	<integer>2</integer>
+</dict>
+</plist>

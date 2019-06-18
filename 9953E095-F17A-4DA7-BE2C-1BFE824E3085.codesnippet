@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDECodeSnippetCompletionPrefix</key>
+	<string>bl_registercustomcell</string>
+	<key>IDECodeSnippetCompletionScopes</key>
+	<array>
+		<string>All</string>
+	</array>
+	<key>IDECodeSnippetContents</key>
+	<string>    [self.treasuresListTableView registerNib:[UINib nibWithNibName:@"&lt;#nibname#&gt;" bundle:nil] forCellReuseIdentifier:@"&lt;#cellidentifier#&gt;"];
+    self.treasuresListTableView.estimatedRowHeight = 86;
+    self.treasuresListTableView.separatorStyle = UITableViewCellSeparatorStyleNone;</string>
+	<key>IDECodeSnippetIdentifier</key>
+	<string>9953E095-F17A-4DA7-BE2C-1BFE824E3085</string>
+	<key>IDECodeSnippetLanguage</key>
+	<string>Xcode.SourceCodeLanguage.Objective-C</string>
+	<key>IDECodeSnippetSummary</key>
+	<string>Register custom tableviewcell</string>
+	<key>IDECodeSnippetTitle</key>
+	<string>Register custom tableviewcell</string>
+	<key>IDECodeSnippetUserSnippet</key>
+	<true/>
+	<key>IDECodeSnippetVersion</key>
+	<integer>2</integer>
+</dict>
+</plist>

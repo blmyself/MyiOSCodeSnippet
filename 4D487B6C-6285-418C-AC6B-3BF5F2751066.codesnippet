@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDECodeSnippetCompletionPrefix</key>
+	<string>hpg_mjrequestwithpagenation</string>
+	<key>IDECodeSnippetCompletionScopes</key>
+	<array>
+		<string>All</string>
+	</array>
+	<key>IDECodeSnippetContents</key>
+	<string>
+#pragma mark - 网络请求
+- (void)loadDataWithPage:(NSInteger)curPage showProgress:(BOOL)showProgress{
+    NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:
+                          [NSString stringWithFormat:@"%d",curPage],@"page",
+                          nil];
+    [super doPost:API_COLLECT_QUERY params:params showProgress:showProgress tag:COLLECTLIST_REQ_TAG];
+    
+}
+
+
+- (void)endMjRefresh{
+    if (self.isLoadMore) {
+        [self.mainTableView.mj_footer endRefreshing];
+    }else{
+        [self.mainTableView.mj_header endRefreshing];
+    }
+}
+
+- (void)refreshData{
+    if (self.isLoading) {
+        return;
+    }
+    self.isLoadMore = NO;
+    [self.mainTableView.mj_footer resetNoMoreData];
+    [self loadDataWithPage:1 showProgress:NO];
+    
+}
+
+- (void)loadMoreData{
+    if (self.isLoading || ![self canLoadMore]) {
+        if(![self canLoadMore]){
+            [self.mainTableView.mj_footer endRefreshingWithNoMoreData];
+        }
+        return;
+    }
+    self.isLoadMore = YES;
+    [self loadDataWithPage:self.page+1 showProgress:NO];
+}
+
+
+//请求数据
+-(BOOL)httpSuccessHandle:(NSDictionary *)data cache:(BOOL)cache tag:(int)tag{
+    
+    if (tag==COUPONLIST_REQ_TAG) {
+        
+        NSArray * list = [data objectForKey:@"list"];
+        
+        if (self.isLoadMore) {
+            if (!IsNilOrNull(list)) {
+                [self.collectListArray addObjectsFromArray:list];
+            }
+            
+        }else{
+            if (!IsNilOrNull(list)) {
+                self.collectListArray = [NSMutableArray arrayWithArray:list];
+            }
+            
+            if (self.collectListArray.count==0) {
+                _hasGoods = NO;
+                _mainTableView.tableHeaderView=[self createCollectEmptyHeaderView];
+            }else{
+                _hasGoods = YES;
+                _mainTableView.tableHeaderView=nil;
+            }
+        }
+        
+        HpgPageModel * pageModel = [HpgPageModel mj_objectWithKeyValues:[data objectForKey:@"page"]];
+        self.page = [pageModel.page integerValue];
+        self.totalPage = [pageModel.pages integerValue];
+        
+        [self.mainTableView reloadData];
+        [self endMjRefresh];
+        
+        return NO;
+    }
+    
+    
+    return NO;//返回no是不缓存，yes是缓存
+}
+
+
+//请求结果异常处理回调
+- (BOOL)httpDataErrorHandle:(NSString *)info tag:(int)tag{
+    if(tag==COUPONLIST_REQ_TAG){
+        
+        [self endMjRefresh];
+        
+        return NO;
+    }
+    return NO;//返回NO为全局处理，会弹窗；返回YES则为本界面处理
+}
+
+
+
+
+-(BOOL)httpRespError:(NSString *)data tag:(int)reqTag{
+    if (reqTag==COUPONLIST_REQ_TAG) {
+        [DialogUtils showToast:@"取我的优惠券列表失败!"];
+        
+        [self endMjRefresh];
+        
+        return YES;
+    }
+    
+    
+    
+    return NO;//返回NO是全局处理，直接弹窗并返回上一页；返回yes说明本界面自己处理了
+}</string>
+	<key>IDECodeSnippetIdentifier</key>
+	<string>4D487B6C-6285-418C-AC6B-3BF5F2751066</string>
+	<key>IDECodeSnippetLanguage</key>
+	<string>Xcode.SourceCodeLanguage.Objective-C</string>
+	<key>IDECodeSnippetSummary</key>
+	<string>Hpg Refresh and Loadmore Method</string>
+	<key>IDECodeSnippetTitle</key>
+	<string>Hpg Refresh and Loadmore Method</string>
+	<key>IDECodeSnippetUserSnippet</key>
+	<true/>
+	<key>IDECodeSnippetVersion</key>
+	<integer>2</integer>
+</dict>
+</plist>

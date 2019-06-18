@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDECodeSnippetCompletionPrefix</key>
+	<string>hs_configemptyorerrorview</string>
+	<key>IDECodeSnippetCompletionScopes</key>
+	<array>
+		<string>All</string>
+	</array>
+	<key>IDECodeSnippetContents</key>
+	<string>        //配置错误或空信息
+        NSString * message = [Utils customMessageWithResponseData:data currentDataArray:self.dataArray error:error];
+        [weakSelf.tableView configBlankPageWithText:message image:nil hasData:(weakSelf.dataArray.count&gt;0) hasError:(error != nil) reloadButtonBlock:^(id sender) {
+            [weakSelf.tableView beginLoading];
+            [weakSelf refreshData];
+        }];</string>
+	<key>IDECodeSnippetIdentifier</key>
+	<string>BF68E259-6F83-4D57-9183-07C3012243F8</string>
+	<key>IDECodeSnippetLanguage</key>
+	<string>Xcode.SourceCodeLanguage.Objective-C</string>
+	<key>IDECodeSnippetSummary</key>
+	<string>Set Loading Empty or Error Info View</string>
+	<key>IDECodeSnippetTitle</key>
+	<string>Set Loading Empty or Error Info View</string>
+	<key>IDECodeSnippetUserSnippet</key>
+	<true/>
+	<key>IDECodeSnippetVersion</key>
+	<integer>2</integer>
+</dict>
+</plist>

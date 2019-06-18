@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDECodeSnippetCompletionPrefix</key>
+	<string>bl_iqcallback</string>
+	<key>IDECodeSnippetCompletionScopes</key>
+	<array>
+		<string>All</string>
+	</array>
+	<key>IDECodeSnippetContents</key>
+	<string>- (void)processRequestValidCode:(XMPPIQ *)iq withInfo:(id &lt;XMPPTrackingInfo&gt;)info{
+    //如果在timeout时间内有返回iq
+    NSString * errorMsg = nil;
+    NSTimeInterval hudHideDelay = 0;
+    if (iq) {
+        NSXMLElement * queryEle = [iq elementForName:@"query"];
+        NSString * jsonStr = [Utility jsonStringFromQueryElement:queryEle];
+        NSDictionary *resultDic  = [jsonStr objectFromJSONString];
+        NSString *infoMsg = [resultDic objectForKey:@"info"];
+        NSString *state = [resultDic objectForKey:@"state"];
+        if ([iq isResultIQ]) {//成功
+            [self.hud setLabelText:infoMsg];
+            hudHideDelay = 1.0;
+            
+            
+        }else if([iq isErrorIQ]){//错误
+            errorMsg = infoMsg?infoMsg:@"获取验证码失败";
+            //执行出错代码
+        }
+    }else{//没有返回iq
+        errorMsg = @"网络不给力，请检查您的网络！";
+    }
+    
+    //显示错误提示
+    if (errorMsg) {
+        [self.hud setLabelText:errorMsg];
+        hudHideDelay = 1.0;
+    }
+    //隐藏hud指示器
+    [self.hud hide:YES afterDelay:hudHideDelay];
+}</string>
+	<key>IDECodeSnippetIdentifier</key>
+	<string>8EA2F039-C962-4112-9179-3EE4A58C60D4</string>
+	<key>IDECodeSnippetLanguage</key>
+	<string>Xcode.SourceCodeLanguage.Objective-C</string>
+	<key>IDECodeSnippetSummary</key>
+	<string>IQTracker CallBack Method</string>
+	<key>IDECodeSnippetTitle</key>
+	<string>IQTracker CallBack Method</string>
+	<key>IDECodeSnippetUserSnippet</key>
+	<true/>
+	<key>IDECodeSnippetVersion</key>
+	<integer>2</integer>
+</dict>
+</plist>

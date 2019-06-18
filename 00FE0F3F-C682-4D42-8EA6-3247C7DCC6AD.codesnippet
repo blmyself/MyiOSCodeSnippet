@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDECodeSnippetCompletionPrefix</key>
+	<string>lg_iqhandlewithmjrefresh</string>
+	<key>IDECodeSnippetCompletionScopes</key>
+	<array>
+		<string>All</string>
+	</array>
+	<key>IDECodeSnippetContents</key>
+	<string>//加载数据
+- (void)loadData{
+    
+    [HUDView showWithIndicator:@""];
+    LGUser * user = [LGUserManager sharedUserManager].currentUser;
+    NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                               @"11",@"m",
+                               [NSString stringWithFormat:@"%d",self.page],@"curpage",
+                               nil];
+    [super sendIQWithXmlns:API_XMLNS_BROWSER andDataDic:paramsDic trackId:_getProfitRankTrackId];
+    
+}
+
+
+//下拉刷新
+- (void)refreshData{
+    self.isLoadMore = NO;
+    //更新商品列表操作，把页码重置为1
+    self.page = 1;
+    [self.rankListTableView.footer resetNoMoreData];
+    [self loadData];
+}
+
+//上拉加载更多
+- (void)loadMoreData{
+    self.isLoadMore = YES;
+    
+    //加载更多操作，页码自增
+    if (self.page&lt;self.totalPage) {
+        self.page++;
+    }else{
+        //显示没有更多数据了
+        [self.rankListTableView.footer noticeNoMoreData];
+        return;
+    }
+    [self loadData];
+}
+
+//结束刷新
+- (void)endRefresh{
+    if (self.isLoadMore) {
+        [self.rankListTableView.footer endRefreshing];
+    }else{
+        [self.rankListTableView.header endRefreshing];
+    }
+    [self.rankListTableView reloadData];
+}
+
+
+#pragma mark - IQ RESPONSE
+- (void)handleIQResponse:(NSDictionary *)response trackId:(NSString *)trackId{
+    [HUDView hide];
+    NSString * info = [response objectForKey:@"info"];
+    if ([trackId isEqualToString:_getProfitRankTrackId]) {
+
+        self.page = [[response objectForKey:@"total"] integerValue];
+        self.totalPage = [[response objectForKey:@"curPage"] integerValue];
+        NSArray * list = [response objectForKey:@"list"];
+
+        NSString * noDataMessage = nil;
+        if (self.isLoadMore) {
+            if ([list count]&gt;0) {
+                [self.dataSource addObjectsFromArray:list];
+            }
+        }else{
+            [self.dataSource removeAllObjects];
+            self.dataSource = [NSMutableArray arrayWithArray:list];
+        }
+        
+        if ([list count]==0) {
+            noDataMessage = self.isLoadMore?@"没有更多了":nil;
+        }
+
+        if (noDataMessage) {
+            [HUDView showWithOnlyText:noDataMessage];
+        }
+        [self endRefresh];
+    }
+
+}
+
+- (void)handleIQResponseError:(NSString *)errorInfo trackId:(NSString *)trackId{
+    [HUDView hide];
+    [HUDView showWithOnlyText:errorInfo];
+    [self endRefresh];
+}</string>
+	<key>IDECodeSnippetIdentifier</key>
+	<string>00FE0F3F-C682-4D42-8EA6-3247C7DCC6AD</string>
+	<key>IDECodeSnippetLanguage</key>
+	<string>Xcode.SourceCodeLanguage.Objective-C</string>
+	<key>IDECodeSnippetSummary</key>
+	<string>shortcut:lg_iqhandlewithmjrefresh</string>
+	<key>IDECodeSnippetTitle</key>
+	<string>LazyGuest IQ Send Response with Mjrefresh</string>
+	<key>IDECodeSnippetUserSnippet</key>
+	<true/>
+	<key>IDECodeSnippetVersion</key>
+	<integer>2</integer>
+</dict>
+</plist>

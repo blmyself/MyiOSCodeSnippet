@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDECodeSnippetCompletionPrefix</key>
+	<string>lg_errordatacell</string>
+	<key>IDECodeSnippetCompletionScopes</key>
+	<array>
+		<string>All</string>
+	</array>
+	<key>IDECodeSnippetContents</key>
+	<string>    //出错处理
+    NSIndexPath * indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+    UITableViewCell * cell = (UITableViewCell *)[self.goodsListTableView cellForRowAtIndexPath:indexPath];
+    if (cell) {
+        for (UIView * view in [cell.contentView subviews]) {
+            [view removeFromSuperview];
+        }
+        UITableViewCell * tipCell = [UIHelper tipTxtCell:@"请求出错" withFrame:cell.bounds emptyDataImage:[UIImage imageNamed:@"list_network_error"]];
+        [cell.contentView addSubview:tipCell.contentView];
+    }</string>
+	<key>IDECodeSnippetIdentifier</key>
+	<string>E622BAC4-28D7-41B4-B12D-1A25F2296B33</string>
+	<key>IDECodeSnippetLanguage</key>
+	<string>Xcode.SourceCodeLanguage.Objective-C</string>
+	<key>IDECodeSnippetSummary</key>
+	<string>shortcurt:lg_errordatacell</string>
+	<key>IDECodeSnippetTitle</key>
+	<string>lazy guest errror data cell</string>
+	<key>IDECodeSnippetUserSnippet</key>
+	<true/>
+	<key>IDECodeSnippetVersion</key>
+	<integer>2</integer>
+</dict>
+</plist>

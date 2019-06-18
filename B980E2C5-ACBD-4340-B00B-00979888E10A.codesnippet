@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDECodeSnippetCompletionPrefix</key>
+	<string>bl_iqcb</string>
+	<key>IDECodeSnippetCompletionScopes</key>
+	<array>
+		<string>All</string>
+	</array>
+	<key>IDECodeSnippetContents</key>
+	<string>- (void)processLogin:(XMPPIQ *)iq withInfo:(id &lt;XMPPTrackingInfo&gt;)info{
+    //如果在timeout时间内有返回iq
+    NSString * errorMsg = nil;
+    NSTimeInterval hudHideDelay = 0;
+    if (iq) {
+        NSXMLElement * queryEle = [iq elementForName:@"query"];
+        NSString *jsonStr = [[queryEle elementForName:@"data"]stringValue];
+        NSDictionary *resultDic  = [jsonStr objectFromJSONString];
+        NSString *infoMsg = [resultDic objectForKey:@"info"];
+        NSString *state = [resultDic objectForKey:@"state"];
+        if ([iq isResultIQ]) {//成功
+            [self.mbHud setLabelText:infoMsg];
+            sleep(1);
+            //执行成功代码
+            
+        }else if([iq isErrorIQ]){//错误
+            errorMsg = infoMsg;
+            //执行出错代码
+        }
+    }else{//没有返回iq
+        errorMsg = @"网络不给力，请检查您的网络！";
+    }
+    //显示错误提示
+    if (errorMsg) {
+        [self.mbHud setLabelText:errorMsg];
+        hudHideDelay = 1.0;
+    }
+    //隐藏hud指示器
+    [self.mbHud hide:YES afterDelay:hudHideDelay];
+}</string>
+	<key>IDECodeSnippetIdentifier</key>
+	<string>B980E2C5-ACBD-4340-B00B-00979888E10A</string>
+	<key>IDECodeSnippetLanguage</key>
+	<string>Xcode.SourceCodeLanguage.Generic</string>
+	<key>IDECodeSnippetSummary</key>
+	<string>-shotcut:bl_iqcb</string>
+	<key>IDECodeSnippetTitle</key>
+	<string>IQ callback method</string>
+	<key>IDECodeSnippetUserSnippet</key>
+	<true/>
+	<key>IDECodeSnippetVersion</key>
+	<integer>2</integer>
+</dict>
+</plist>

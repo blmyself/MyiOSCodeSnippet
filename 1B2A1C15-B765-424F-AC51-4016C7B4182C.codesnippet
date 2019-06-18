@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDECodeSnippetCompletionPrefix</key>
+	<string>bl_iqsend</string>
+	<key>IDECodeSnippetCompletionScopes</key>
+	<array>
+		<string>All</string>
+	</array>
+	<key>IDECodeSnippetContents</key>
+	<string>    if ([[LZAppDelegate appDelegate]connect]) {
+        //加载hud指示器
+        [self.hud setLabelText:@"正在登录..."];
+        [self.view.window addSubview:self.hud];
+        [self.hud show:YES];
+        
+        NSString * iqTrackId = [[LZAppDelegate getDataMonitor]  loginWithUsername:loginName andPwd:password];
+        [[LZAppDelegate getXMPPIDTracker] addID:iqTrackId target:self selector:@selector(processLogin:withInfo:) timeout:API_REQUEST_TIMEOUT];
+    }</string>
+	<key>IDECodeSnippetIdentifier</key>
+	<string>1B2A1C15-B765-424F-AC51-4016C7B4182C</string>
+	<key>IDECodeSnippetLanguage</key>
+	<string>Xcode.SourceCodeLanguage.Objective-C</string>
+	<key>IDECodeSnippetSummary</key>
+	<string>IQ Send Code Sample</string>
+	<key>IDECodeSnippetTitle</key>
+	<string>IQ Send Code Sample</string>
+	<key>IDECodeSnippetUserSnippet</key>
+	<true/>
+	<key>IDECodeSnippetVersion</key>
+	<integer>2</integer>
+</dict>
+</plist>

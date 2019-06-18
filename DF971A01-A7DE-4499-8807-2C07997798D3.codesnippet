@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDECodeSnippetCompletionPrefix</key>
+	<string>lg_iqsend</string>
+	<key>IDECodeSnippetCompletionScopes</key>
+	<array>
+		<string>All</string>
+	</array>
+	<key>IDECodeSnippetContents</key>
+	<string>    [HUDView showWithIndicator:@""];
+    NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                               @"11",@"m",
+                               validcode,@"code",
+                               mobile,@"mobile",
+                               nil];
+[super sendIQWithXmlns:&lt;#API_XMLNS#&gt; andDataDic:paramsDic trackId:&lt;#trackId#&gt;];</string>
+	<key>IDECodeSnippetIdentifier</key>
+	<string>DF971A01-A7DE-4499-8807-2C07997798D3</string>
+	<key>IDECodeSnippetLanguage</key>
+	<string>Xcode.SourceCodeLanguage.Objective-C</string>
+	<key>IDECodeSnippetSummary</key>
+	<string>shortcut:lg_iqsend</string>
+	<key>IDECodeSnippetTitle</key>
+	<string>LazyGuest IQ Send Code</string>
+	<key>IDECodeSnippetUserSnippet</key>
+	<true/>
+	<key>IDECodeSnippetVersion</key>
+	<integer>2</integer>
+</dict>
+</plist>

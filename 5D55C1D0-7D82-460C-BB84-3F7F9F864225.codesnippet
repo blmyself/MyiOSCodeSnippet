@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDECodeSnippetCompletionPrefix</key>
+	<string>bl_httprequestwithpagenation</string>
+	<key>IDECodeSnippetCompletionScopes</key>
+	<array>
+		<string>All</string>
+	</array>
+	<key>IDECodeSnippetContents</key>
+	<string>#pragma mark - 加载数据
+- (void)loadDataWithPage:(NSInteger)curPage{
+    
+    NSDictionary * paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                                @(curPage),@"curpage",
+                                nil];
+    __weak typeof(self) weakSelf = self;
+    self.isLoading = YES;
+    [[BLNetApiManager sharedManager]requestWithParams:paramsDic uri:@"" andBlock:^(CFHttpResponseModel * data, NSError *error) {
+        weakSelf.isLoading = NO;
+        [weakSelf endMjRefresh];
+        [MBProgressHUD hide];
+        
+        if (!error) {
+            self.page = [data.curpage integerValue];
+            self.totalPage = [data.total integerValue];
+            
+            NSArray * resultArray = (NSArray *)data.list;
+            
+            if (self.isLoadMore) {
+                [self.dataArray addObjectsFromArray:resultArray];
+            }else{
+                self.dataArray = [NSMutableArray arrayWithArray:resultArray];
+            }
+            [weakSelf.rankListTableView reloadData];
+            
+        }
+    }];
+    
+}
+
+- (void)endMjRefresh{
+    if (self.isLoadMore) {
+        [self.rankListTableView.mj_footer endRefreshing];
+    }else{
+        [self.rankListTableView.mj_header endRefreshing];
+    }
+}
+
+- (void)refreshData{
+    if (self.isLoading) {
+        return;
+    }
+    self.isLoadMore = NO;
+    [self.rankListTableView.mj_footer resetNoMoreData];
+    [self loadDataWithPage:1];
+    
+}
+
+- (void)loadMoreData{
+    if (self.isLoading || ![self canLoadMore]) {
+        if(![self canLoadMore]){
+            [self.rankListTableView.mj_footer endRefreshingWithNoMoreData];
+        }
+        return;
+    }
+    self.isLoadMore = YES;
+    [self loadDataWithPage:self.page+1];
+}
+</string>
+	<key>IDECodeSnippetIdentifier</key>
+	<string>5D55C1D0-7D82-460C-BB84-3F7F9F864225</string>
+	<key>IDECodeSnippetLanguage</key>
+	<string>Xcode.SourceCodeLanguage.Objective-C</string>
+	<key>IDECodeSnippetSummary</key>
+	<string>BL http request with pagenation</string>
+	<key>IDECodeSnippetTitle</key>
+	<string>BL http request with pagenation</string>
+	<key>IDECodeSnippetUserSnippet</key>
+	<true/>
+	<key>IDECodeSnippetVersion</key>
+	<integer>2</integer>
+</dict>
+</plist>

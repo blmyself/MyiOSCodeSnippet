@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDECodeSnippetCompletionPrefix</key>
+	<string>bl_initvc</string>
+	<key>IDECodeSnippetCompletionScopes</key>
+	<array>
+		<string>CodeBlock</string>
+	</array>
+	<key>IDECodeSnippetContents</key>
+	<string>&lt;#viewcontroller#&gt; * controller = [[&lt;#viewcontroller#&gt; alloc]initWithNibName:@"&lt;#viewcontroller#&gt;" bundle:nil];
+controller.hidesBottomBarWhenPushed = YES;
+[self.navigationController pushViewController:controller animated:YES];</string>
+	<key>IDECodeSnippetIdentifier</key>
+	<string>A22943BD-7284-4548-BA5C-1F15395C849F</string>
+	<key>IDECodeSnippetLanguage</key>
+	<string>Xcode.SourceCodeLanguage.Objective-C</string>
+	<key>IDECodeSnippetSummary</key>
+	<string>-shotcut:bl_initvc</string>
+	<key>IDECodeSnippetTitle</key>
+	<string>Init a view controller with nib</string>
+	<key>IDECodeSnippetUserSnippet</key>
+	<true/>
+	<key>IDECodeSnippetVersion</key>
+	<integer>2</integer>
+</dict>
+</plist>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDECodeSnippetCompletionPrefix</key>
+	<string>sg_requestwithpagenation</string>
+	<key>IDECodeSnippetCompletionScopes</key>
+	<array>
+		<string>All</string>
+	</array>
+	<key>IDECodeSnippetContents</key>
+	<string>- (void)loadDataWithPage:(NSInteger)curPage{
+    
+    NSDictionary * paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                                @(curPage),@"pg",
+                                nil];
+    __weak typeof(self) weakSelf = self;
+    self.isLoading = YES;
+    [[BLNetApiManager sharedManager]requestWithParams:paramsDic uri:URI_PREPAYMENT_LIST action:ACTION_PREPAYMENT_LIST andBlock:^(SGHttpResponsModel * data, NSError *error) {
+        weakSelf.isLoading = NO;
+        [weakSelf endMjRefresh];
+        [weakSelf.view endLoading];
+        
+        if (!error) {
+            //self.page = [[data.data objectForKey:@"pages"] integerValue];
+            self.totalPage = [[data.data objectForKey:@"allpages"] integerValue];
+            
+            if (self.isLoadMore) {
+                [self.dataArray addObjectsFromArray:[data.data objectForKey:@"rcs"]];
+            }else{
+                self.dataArray = [NSMutableArray arrayWithArray:[data.data objectForKey:@"rcs"]];
+            }
+            [self.prepaymentTableView reloadData];
+            
+        }
+        //配置错误或空信息
+        [weakSelf.view configBlankPageWithText:data.message image:nil hasData:(self.dataArray.count&gt;0) hasError:(error != nil) reloadButtonBlock:^(id sender) {
+            [weakSelf.view beginLoading];
+            [weakSelf refreshData];
+        }];
+    }];
+    
+}
+
+- (void)endMjRefresh{
+    if (self.isLoadMore) {
+        [self.prepaymentTableView.mj_footer endRefreshing];
+    }else{
+        [self.prepaymentTableView.mj_header endRefreshing];
+    }
+}
+
+- (void)refreshData{
+    if (self.isLoading) {
+        return;
+    }
+    self.isLoadMore = NO;
+    [self.prepaymentTableView.mj_footer resetNoMoreData];
+    [self loadDataWithPage:1];
+    
+}
+
+- (void)loadMoreData{
+    if (self.isLoading || ![self canLoadMore]) {
+        if(![self canLoadMore]){
+            [self.prepaymentTableView.mj_footer endRefreshingWithNoMoreData];
+        }
+        return;
+    }
+    self.isLoadMore = YES;
+    self.page++;
+    [self loadDataWithPage:self.page];
+}</string>
+	<key>IDECodeSnippetIdentifier</key>
+	<string>84611571-AFBC-4637-B8EF-E66158246D5B</string>
+	<key>IDECodeSnippetLanguage</key>
+	<string>Xcode.SourceCodeLanguage.Objective-C</string>
+	<key>IDECodeSnippetSummary</key>
+	<string>Config http request with mj refresh and pagenation</string>
+	<key>IDECodeSnippetTitle</key>
+	<string>Config http request with mj refresh and pagenation</string>
+	<key>IDECodeSnippetUserSnippet</key>
+	<true/>
+	<key>IDECodeSnippetVersion</key>
+	<integer>2</integer>
+</dict>
+</plist>

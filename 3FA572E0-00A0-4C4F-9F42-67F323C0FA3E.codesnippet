@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDECodeSnippetCompletionPrefix</key>
+	<string>sg_httprequest</string>
+	<key>IDECodeSnippetCompletionScopes</key>
+	<array>
+		<string>All</string>
+	</array>
+	<key>IDECodeSnippetContents</key>
+	<string>    //发送请求
+    NSDictionary * paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                                @"",@"",
+                                nil];
+    __weak typeof(self) weakSelf = self;
+    [[BLNetApiManager sharedManager] requestWithParams:paramsDic uri:&lt;#(NSString *)#&gt; action:&lt;#(NSString *)#&gt; andBlock:^(SGHttpResponsModel *data, NSError *error) {
+        [HUDView hide];
+        
+        if (!error) {
+            
+        }
+    }];</string>
+	<key>IDECodeSnippetIdentifier</key>
+	<string>3FA572E0-00A0-4C4F-9F42-67F323C0FA3E</string>
+	<key>IDECodeSnippetLanguage</key>
+	<string>Xcode.SourceCodeLanguage.Objective-C</string>
+	<key>IDECodeSnippetSummary</key>
+	<string>Supermarket Gang Http Post Quick Method</string>
+	<key>IDECodeSnippetTitle</key>
+	<string>Supermarket Gang Http Post Quick Method</string>
+	<key>IDECodeSnippetUserSnippet</key>
+	<true/>
+	<key>IDECodeSnippetVersion</key>
+	<integer>2</integer>
+</dict>
+</plist>
